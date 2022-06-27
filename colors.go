@@ -1,6 +1,6 @@
 package markdown
 
-import "github.com/fatih/color"
+import "github.com/crgimenes/term-markdown/color"
 
 var (
 	// we need a bunch of escape code for manual formatting

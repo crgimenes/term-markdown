@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/fatih/color"
+	"github.com/crgimenes/term-markdown/color"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

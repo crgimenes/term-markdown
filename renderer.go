@@ -435,7 +435,7 @@ func (r *renderer) renderHeading(w io.Writer, level int) {
 
 	// render the full line with the headingNumbering
 	r.headingNumbering.Observe(level)
-	content = fmt.Sprintf("%s %s", r.headingNumbering.Render(), content)
+	content = fmt.Sprintf("%s %s", strings.Repeat("#", level), content)
 	content = r.headingShade(level)(content)
 
 	// wrap if needed

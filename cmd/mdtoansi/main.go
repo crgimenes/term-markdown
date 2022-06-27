@@ -36,6 +36,6 @@ func main() {
 		return
 	}
 
-	result := markdown.Render(string(b), 80, 6)
-	fmt.Println(string(result))
+	result := markdown.Render(string(b), 200, 6)
+	os.Stdout.Write(result)
 }

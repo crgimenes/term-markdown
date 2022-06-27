@@ -1,5 +1,0 @@
-    Foo [bar]([34m/url/[0m Title with "quotes"
-    inside).
-
-    Foo [bar]([34m/url/[0m Title with "quotes"
-    inside).

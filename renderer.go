@@ -12,7 +12,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/MichaelMure/go-term-text"
+	text "github.com/MichaelMure/go-term-text"
 	"github.com/alecthomas/chroma"
 	"github.com/alecthomas/chroma/formatters"
 	"github.com/alecthomas/chroma/lexers"
@@ -24,7 +24,7 @@ import (
 	"github.com/kyokomi/emoji/v2"
 	"golang.org/x/net/html"
 
-	htmlWalker "github.com/MichaelMure/go-term-markdown/html"
+	htmlWalker "github.com/crgimenes/term-markdown/html"
 )
 
 /*

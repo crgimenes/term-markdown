@@ -40,12 +40,11 @@ func main() {
 	width := 80
 	if term.IsTerminal(0) {
 		// in a term
-	}
-
-	width, _, err = term.GetSize(0)
-	if err != nil {
-		fmt.Println(err)
-		return
+		width, _, err = term.GetSize(0)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 
 	result := markdown.Render(string(b), width, 6)

@@ -1,4 +1,4 @@
-module github.com/MichaelMure/go-term-markdown
+module github.com/crgimenes/term-markdown
 
 go 1.18
 
@@ -7,10 +7,10 @@ require (
 	github.com/alecthomas/chroma v0.10.0
 	github.com/eliukblau/pixterm v1.3.1
 	github.com/fatih/color v1.13.0
-	github.com/gomarkdown/markdown v0.0.0-20220310201231-552c6011c0b8
+	github.com/gomarkdown/markdown v0.0.0-20220607163217-45f7c050e2d1
 	github.com/kyokomi/emoji/v2 v2.2.9
 	github.com/stretchr/testify v1.7.5
-	golang.org/x/net v0.0.0-20220401154927-543a649e0bdd
+	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e
 )
 
 require (
@@ -23,7 +23,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	golang.org/x/image v0.0.0-20220321031419-a8550c1d254a // indirect
-	golang.org/x/sys v0.0.0-20220330033206-e17cdc41300f // indirect
+	golang.org/x/image v0.0.0-20220617043117-41969df76e82 // indirect
+	golang.org/x/sys v0.0.0-20220624220833-87e55d714810 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

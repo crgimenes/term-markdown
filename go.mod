@@ -11,6 +11,7 @@ require (
 	github.com/kyokomi/emoji/v2 v2.2.9
 	github.com/stretchr/testify v1.7.5
 	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e
+	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 )
 
 require (

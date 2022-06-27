@@ -7,6 +7,7 @@ import (
 	"os"
 
 	markdown "github.com/crgimenes/term-markdown"
+	"golang.org/x/term"
 )
 
 type config struct {
@@ -36,6 +37,17 @@ func main() {
 		return
 	}
 
-	result := markdown.Render(string(b), 200, 6)
+	width := 80
+	if term.IsTerminal(0) {
+		// in a term
+	}
+
+	width, _, err = term.GetSize(0)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	result := markdown.Render(string(b), width, 6)
 	os.Stdout.Write(result)
 }

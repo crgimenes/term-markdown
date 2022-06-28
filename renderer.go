@@ -119,10 +119,10 @@ type renderer struct {
 
 	// record and render the heading numbering
 	headingNumbering headingNumbering
-	headingShade     levelShadeFmt
+	//headingShade     levelShadeFmt
 
 	blockQuoteLevel int
-	blockQuoteShade levelShadeFmt
+	//blockQuoteShade levelShadeFmt
 
 	table *tableRenderer
 }
@@ -130,11 +130,11 @@ type renderer struct {
 /// NewRenderer creates a new instance of the console renderer
 func NewRenderer(lineWidth int, leftPad int, opts ...Options) *renderer {
 	r := &renderer{
-		lineWidth:       lineWidth,
-		leftPad:         leftPad,
-		padAccumulator:  make([]string, 0, 10),
-		headingShade:    shade(defaultHeadingShades),
-		blockQuoteShade: shade(defaultQuoteShades),
+		lineWidth:      lineWidth,
+		leftPad:        leftPad,
+		padAccumulator: make([]string, 0, 10),
+		//headingShade:    shade(defaultHeadingShades),
+		//blockQuoteShade: shade(defaultQuoteShades),
 	}
 	for _, opt := range opts {
 		opt(r)
@@ -170,7 +170,7 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 		// set and remove a colored bar on the left
 		if entering {
 			r.blockQuoteLevel++
-			r.addPad(r.blockQuoteShade(r.blockQuoteLevel)("┃ "))
+			r.addPad("┃ ")
 		} else {
 			r.blockQuoteLevel--
 			r.popPad()
@@ -201,7 +201,7 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 					itemNumber++
 				}
 				prefix := fmt.Sprintf("%d. ", itemNumber)
-				r.indent = r.pad() + Green(prefix)
+				r.indent = r.pad() + prefix
 				r.addPad(strings.Repeat(" ", text.Len(prefix)))
 
 			// header of a definition
@@ -214,7 +214,7 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 
 			// no flags means it's the normal bullet point list
 			default:
-				r.indent = r.pad() + Green("• ")
+				r.indent = r.pad() + "• "
 				r.addPad("  ")
 			}
 		} else {
@@ -307,7 +307,7 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 			r.inlineAccumulator.WriteString("[")
 			r.inlineAccumulator.WriteString(string(ast.GetFirstChild(node).AsLeaf().Literal))
 			r.inlineAccumulator.WriteString("](")
-			r.inlineAccumulator.WriteString(Blue(string(node.Destination)))
+			r.inlineAccumulator.WriteString(string(node.Destination))
 			if len(node.Title) > 0 {
 				r.inlineAccumulator.WriteString(" ")
 				r.inlineAccumulator.WriteString(string(node.Title))
@@ -370,10 +370,10 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 		r.inlineAccumulator.WriteString("\n")
 
 	case *ast.Code:
-		r.inlineAccumulator.WriteString(BlueBgItalic(string(node.Literal)))
+		r.inlineAccumulator.WriteString(string(node.Literal))
 
 	case *ast.HTMLSpan:
-		r.inlineAccumulator.WriteString(Red(string(node.Literal)))
+		r.inlineAccumulator.WriteString(string(node.Literal))
 
 	case *ast.Table:
 		if entering {
@@ -436,7 +436,7 @@ func (r *renderer) renderHeading(w io.Writer, level int) {
 	// render the full line with the headingNumbering
 	r.headingNumbering.Observe(level)
 	content = fmt.Sprintf("%s %s", strings.Repeat("#", level), content)
-	content = r.headingShade(level)(content)
+	//content = r.headingShade(level)(content)
 
 	// wrap if needed
 	wrapped, _ := text.WrapWithPad(content, r.lineWidth, r.pad())
@@ -498,7 +498,7 @@ func (r *renderer) renderFormattedCodeBlock(w io.Writer, code string) {
 	// remove the trailing line break
 	code = strings.TrimRight(code, "\n")
 
-	r.addPad(GreenBold("┃ "))
+	r.addPad("┃ ")
 	output, _ := text.WrapWithPad(code, r.lineWidth, r.pad())
 	r.popPad()
 
@@ -524,7 +524,7 @@ func (r *renderer) renderHTMLBlock(w io.Writer, node *ast.HTMLBlock) {
 	if err != nil {
 		// if there is a parsing error, fallback to a simple render
 		r.inlineAccumulator.Reset()
-		content := Red(string(node.Literal))
+		content := string(node.Literal)
 		out, _ := text.WrapWithPad(content, r.lineWidth, r.pad())
 		_, _ = fmt.Fprint(w, out, "\n\n")
 		return
@@ -617,7 +617,7 @@ func (r *renderer) renderHTMLBlock(w io.Writer, node *ast.HTMLBlock) {
 				if entering {
 					switch node.Parent.Data {
 					case "ul":
-						r.indent = r.pad() + Green("• ")
+						r.indent = r.pad() + "• "
 						r.addPad("  ")
 
 					case "ol":
@@ -628,11 +628,11 @@ func (r *renderer) renderHTMLBlock(w io.Writer, node *ast.HTMLBlock) {
 							previous = previous.PrevSibling
 						}
 						prefix := fmt.Sprintf("%d. ", itemNumber)
-						r.indent = r.pad() + Green(prefix)
+						r.indent = r.pad() + prefix
 						r.addPad(strings.Repeat(" ", text.Len(prefix)))
 
 					default:
-						r.inlineAccumulator.WriteString(Red(renderRawHtml(node)))
+						r.inlineAccumulator.WriteString(renderRawHtml(node))
 						return htmlWalker.SkipChildren
 					}
 				} else {
@@ -653,7 +653,7 @@ func (r *renderer) renderHTMLBlock(w io.Writer, node *ast.HTMLBlock) {
 				} else {
 					href, alt := getAHTMLAttr(node.Attr)
 					r.inlineAccumulator.WriteString("](")
-					r.inlineAccumulator.WriteString(Blue(href))
+					r.inlineAccumulator.WriteString(href)
 					if len(alt) > 0 {
 						r.inlineAccumulator.WriteString(" ")
 						r.inlineAccumulator.WriteString(alt)
@@ -733,7 +733,7 @@ func (r *renderer) renderHTMLBlock(w io.Writer, node *ast.HTMLBlock) {
 				}
 
 			default:
-				r.inlineAccumulator.WriteString(Red(renderRawHtml(node)))
+				r.inlineAccumulator.WriteString(renderRawHtml(node))
 			}
 
 		case html.TextNode:
@@ -889,7 +889,7 @@ func (r *renderer) renderImage(dest string, title string, lineWidth int) (result
 	dest = strings.TrimSpace(dest)
 
 	fallback := func() (string, bool) {
-		return fmt.Sprintf("![%s](%s)", title, Blue(dest)), false
+		return fmt.Sprintf("![%s](%s)", title, dest), false
 	}
 
 	reader, err := imageFromDestination(dest)
@@ -912,9 +912,9 @@ func (r *renderer) renderImage(dest string, title string, lineWidth int) (result
 	}
 
 	if title != "" {
-		return fmt.Sprintf("%s%s: %s", img.Render(), title, Blue(dest)), true
+		return fmt.Sprintf("%s%s: %s", img.Render(), title, dest), true
 	}
-	return fmt.Sprintf("%s%s", img.Render(), Blue(dest)), true
+	return fmt.Sprintf("%s%s", img.Render(), dest), true
 }
 
 func imageFromDestination(dest string) (io.ReadCloser, error) {

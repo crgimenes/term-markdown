@@ -117,7 +117,7 @@ type renderer struct {
 	inlineAccumulator strings.Builder
 
 	// record and render the heading numbering
-	headingNumbering headingNumbering
+	//headingNumbering headingNumbering
 	//headingShade     levelShadeFmt
 
 	blockQuoteLevel int
@@ -433,7 +433,7 @@ func (r *renderer) renderHeading(w io.Writer, level int) {
 	r.inlineAccumulator.Reset()
 
 	// render the full line with the headingNumbering
-	r.headingNumbering.Observe(level)
+	//r.headingNumbering.Observe(level)
 	content = fmt.Sprintf("%s %s", strings.Repeat("#", level), content)
 	//content = r.headingShade(level)(content)
 

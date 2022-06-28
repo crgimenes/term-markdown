@@ -1,6 +1,6 @@
 package html
 
-import . "golang.org/x/net/html"
+import "golang.org/x/net/html"
 
 // WalkStatus allows NodeVisitor to have some control over the tree traversal.
 // It is returned from NodeVisitor and different values allow Node.Walk to
@@ -20,14 +20,14 @@ const (
 // Called twice for every node: once with entering=true when the branch is
 // first visited, then with entering=false after all the children are done.
 type NodeVisitor interface {
-	Visit(node *Node, entering bool) WalkStatus
+	Visit(node *html.Node, entering bool) WalkStatus
 }
 
-func Walk(n *Node, visitor NodeVisitor) WalkStatus {
+func Walk(n *html.Node, visitor NodeVisitor) WalkStatus {
 	isContainer := n.FirstChild != nil
 
 	// some special case that are container but can be self closing
-	if n.Type == ElementNode {
+	if n.Type == html.ElementNode {
 		switch n.Data {
 		case "td":
 			isContainer = true
@@ -65,14 +65,14 @@ func Walk(n *Node, visitor NodeVisitor) WalkStatus {
 }
 
 // NodeVisitorFunc casts a function to match NodeVisitor interface
-type NodeVisitorFunc func(node *Node, entering bool) WalkStatus
+type NodeVisitorFunc func(node *html.Node, entering bool) WalkStatus
 
 // Visit calls visitor function
-func (f NodeVisitorFunc) Visit(node *Node, entering bool) WalkStatus {
+func (f NodeVisitorFunc) Visit(node *html.Node, entering bool) WalkStatus {
 	return f(node, entering)
 }
 
 // WalkFunc is like Walk but accepts just a callback function
-func WalkFunc(n *Node, f NodeVisitorFunc) {
+func WalkFunc(n *html.Node, f NodeVisitorFunc) {
 	Walk(n, f)
 }

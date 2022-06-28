@@ -17,7 +17,6 @@ import (
 	"github.com/alecthomas/chroma/formatters"
 	"github.com/alecthomas/chroma/lexers"
 	"github.com/alecthomas/chroma/styles"
-	"github.com/crgimenes/term-markdown/color"
 	"github.com/eliukblau/pixterm/pkg/ansimage"
 	md "github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/ast"
@@ -469,11 +468,11 @@ func (r *renderer) renderCodeBlock(w io.Writer, node *ast.CodeBlock) {
 	lexer = chroma.Coalesce(lexer)
 
 	var formatter chroma.Formatter
-	if color.NoColor {
-		formatter = formatters.Fallback
-	} else {
-		formatter = formatters.TTY8
-	}
+	//if color.NoColor {
+	//	formatter = formatters.Fallback
+	//} else {
+	formatter = formatters.TTY8
+	//}
 
 	iterator, err := lexer.Tokenise(nil, code)
 	if err != nil {

@@ -6,15 +6,17 @@ import (
 )
 
 const (
-	boldOn        = "\x1b[1m"
-	boldOff       = "\x1b[21m"
-	italicOn      = "\x1b[3m"
-	italicOff     = "\x1b[23m"
-	crossedOutOn  = "\x1b[9m"
-	crossedOutOff = "\x1b[29m"
-	greenOn       = "\x1b[32m"
-	resetAll      = "\x1b[0m"
-	colorOff      = "\x1b[39m"
+	boldOn           = "\x1b[1m"
+	boldOff          = "\x1b[21m"
+	italicOn         = "\x1b[3m"
+	italicOff        = "\x1b[23m"
+	crossedOutOn     = "\x1b[9m"
+	crossedOutOff    = "\x1b[29m"
+	greenOn          = "\x1b[32m"
+	resetAll         = "\x1b[0m"
+	colorOff         = "\x1b[39m"
+	colorBlockQuote  = "\x1b[38;5;10m"
+	colorBlockQuote2 = "\x1b[38;5;13m"
 )
 
 // Extensions returns the bitmask of extensions supported by this renderer.

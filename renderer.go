@@ -169,7 +169,7 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 		// set and remove a colored bar on the left
 		if entering {
 			r.blockQuoteLevel++
-			r.addPad("┃ ")
+			r.addPad(colorBlockQuote2 + "┃ " + resetAll)
 		} else {
 			r.blockQuoteLevel--
 			r.popPad()
@@ -497,7 +497,7 @@ func (r *renderer) renderFormattedCodeBlock(w io.Writer, code string) {
 	// remove the trailing line break
 	code = strings.TrimRight(code, "\n")
 
-	r.addPad("┃ ")
+	r.addPad(colorBlockQuote + "┃ " + resetAll)
 	output, _ := text.WrapWithPad(code, r.lineWidth, r.pad())
 	r.popPad()
 

@@ -304,15 +304,22 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 
 	case *ast.Link:
 		if entering {
-			r.inlineAccumulator.WriteString("[")
-			r.inlineAccumulator.WriteString(string(ast.GetFirstChild(node).AsLeaf().Literal))
-			r.inlineAccumulator.WriteString("](")
-			r.inlineAccumulator.WriteString(string(node.Destination))
-			if len(node.Title) > 0 {
-				r.inlineAccumulator.WriteString(" ")
-				r.inlineAccumulator.WriteString(string(node.Title))
+			title := string(ast.GetFirstChild(node).AsLeaf().Literal)
+			dest := string(node.Destination)
+
+			if dest != title {
+				r.inlineAccumulator.WriteString("[")
+				r.inlineAccumulator.WriteString("\x1b[38;5;13m" + title + resetAll)
+				r.inlineAccumulator.WriteString("](")
+				r.inlineAccumulator.WriteString("\x1b[38;5;10m" + dest + resetAll)
+				if len(node.Title) > 0 {
+					r.inlineAccumulator.WriteString(" ")
+					r.inlineAccumulator.WriteString(string(node.Title))
+				}
+				r.inlineAccumulator.WriteString(")")
+			} else {
+				r.inlineAccumulator.WriteString("\x1b[38;5;10m" + dest + resetAll)
 			}
-			r.inlineAccumulator.WriteString(")")
 			return ast.SkipChildren
 		}
 
@@ -327,8 +334,11 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 				}
 			}
 
+			dest := string(node.Destination)
+			dest = strings.Replace(dest, "#floatright", "", -1)
+
 			str, rendered := r.renderImage(
-				string(node.Destination), title,
+				dest, title,
 				r.lineWidth-r.leftPad,
 			)
 

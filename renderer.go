@@ -177,11 +177,12 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 
 	case *ast.List:
 		// extra new line at the end of a list *if* next is not a list
-		if next := ast.GetNextNode(node); !entering && next != nil {
+		next := ast.GetNextNode(node)
+		if !entering && next != nil {
 			_, parentIsListItem := node.GetParent().(*ast.ListItem)
 			_, nextIsList := next.(*ast.List)
 			if !nextIsList && !parentIsListItem {
-				_, _ = fmt.Fprintln(w)
+				w.Write([]byte("\n"))
 			}
 		}
 
@@ -199,7 +200,7 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 					}
 					itemNumber++
 				}
-				prefix := fmt.Sprintf("%d. ", itemNumber)
+				prefix := fmt.Sprintf("%s%d.%s ", colorListItem, itemNumber, resetAll)
 				r.indent = r.pad() + prefix
 				r.addPad(strings.Repeat(" ", text.Len(prefix)))
 
@@ -213,7 +214,7 @@ func (r *renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 
 			// no flags means it's the normal bullet point list
 			default:
-				r.indent = r.pad() + "• "
+				r.indent = r.pad() + colorListItem + "• " + resetAll
 				r.addPad("  ")
 			}
 		} else {

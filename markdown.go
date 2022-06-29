@@ -17,6 +17,7 @@ const (
 	colorOff         = "\x1b[39m"
 	colorBlockQuote  = "\x1b[38;5;10m"
 	colorBlockQuote2 = "\x1b[38;5;13m"
+	colorListItem    = "\x1b[38;5;13m"
 )
 
 // Extensions returns the bitmask of extensions supported by this renderer.

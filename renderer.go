@@ -435,7 +435,7 @@ func (r *renderer) renderHeading(w io.Writer, level int) {
 
 	// render the full line with the headingNumbering
 	//r.headingNumbering.Observe(level)
-	content = fmt.Sprintf("%s %s", strings.Repeat("#", level), content)
+	content = fmt.Sprintf("\x1b[38;5;15m%s %s%s%s", strings.Repeat("#", level), colorHeading, content, resetAll)
 	//content = r.headingShade(level)(content)
 
 	// wrap if needed
@@ -444,7 +444,7 @@ func (r *renderer) renderHeading(w io.Writer, level int) {
 
 	// render the underline, if any
 	if level == 1 {
-		_, _ = fmt.Fprintf(w, "%s%s\n", r.pad(), strings.Repeat("─", r.lineWidth-r.leftPad))
+		_, _ = fmt.Fprintf(w, "%s\x1b[38;5;13m%s\n", r.pad(), strings.Repeat("─", r.lineWidth-r.leftPad))
 	}
 
 	_, _ = fmt.Fprintln(w)

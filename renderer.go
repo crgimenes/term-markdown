@@ -436,7 +436,7 @@ func (*renderer) RenderHeader(w io.Writer, node ast.Node) {}
 func (*renderer) RenderFooter(w io.Writer, node ast.Node) {}
 
 func (r *renderer) renderHorizontalRule(w io.Writer) {
-	_, _ = fmt.Fprintf(w, "%s%s\n\n", r.pad(), strings.Repeat("─", r.lineWidth-r.leftPad))
+	_, _ = fmt.Fprintf(w, "%s\x1b[38;5;13m%s\x1b[0m\n\n", r.pad(), strings.Repeat("─", r.lineWidth-r.leftPad))
 }
 
 func (r *renderer) renderHeading(w io.Writer, level int) {
@@ -457,7 +457,7 @@ func (r *renderer) renderHeading(w io.Writer, level int) {
 		_, _ = fmt.Fprintf(w, "%s\x1b[38;5;13m%s\n", r.pad(), strings.Repeat("─", r.lineWidth-r.leftPad))
 	}
 
-	_, _ = fmt.Fprintln(w)
+	w.Write([]byte("\n"))
 }
 
 func (r *renderer) renderCodeBlock(w io.Writer, node *ast.CodeBlock) {
@@ -512,9 +512,7 @@ func (r *renderer) renderFormattedCodeBlock(w io.Writer, code string) {
 	output, _ := text.WrapWithPad(code, r.lineWidth, r.pad())
 	r.popPad()
 
-	_, _ = fmt.Fprint(w, output)
-
-	_, _ = fmt.Fprintf(w, "\n\n")
+	w.Write([]byte(output + "\n\n"))
 }
 
 func (r *renderer) renderHTMLBlock(w io.Writer, node *ast.HTMLBlock) {

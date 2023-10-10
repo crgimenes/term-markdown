@@ -6,11 +6,11 @@ require (
 	github.com/MichaelMure/go-term-text v0.3.1
 	github.com/alecthomas/chroma v0.10.0
 	github.com/eliukblau/pixterm v1.3.1
-	github.com/gomarkdown/markdown v0.0.0-20230716120725-531d2d74bc12
+	github.com/gomarkdown/markdown v0.0.0-20230922112808-5421fefb8386
 	github.com/kyokomi/emoji/v2 v2.2.12
 	github.com/stretchr/testify v1.7.5
-	golang.org/x/net v0.14.0
-	golang.org/x/term v0.11.0
+	golang.org/x/net v0.16.0
+	golang.org/x/term v0.13.0
 )
 
 require (
@@ -21,7 +21,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	golang.org/x/image v0.11.0 // indirect
-	golang.org/x/sys v0.11.0 // indirect
+	golang.org/x/image v0.13.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
